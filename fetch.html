@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fetch API Example</title>
+    <script>
+      function performFetch() {
+        const url = document.getElementById('url').value;
+        const body = document.getElementById('body').value;
+        const headers = JSON.parse(document.getElementById('headers').value);
+        const method = document.getElementById('method').value;
+
+        fetch(url, {
+          body: body ? JSON.stringify(JSON.parse(body)) : undefined,
+          headers: headers,
+          method: method
+        })
+          .then(response => response.text())
+          .then(responseText => {
+            // Display the response in an HTML element
+            document.getElementById('response').textContent = responseText;
+
+            // Log the response to the console
+            console.log(responseText);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
+
+      function copyFetchCommand() {
+        const url = document.getElementById('url').value;
+        const body = document.getElementById('body').value;
+        const headers = JSON.parse(document.getElementById('headers').value);
+        const method = document.getElementById('method').value;
+
+        const fetchCommand = `fetch('${url}', {
+          body: ${body ? JSON.stringify(JSON.parse(body)) : 'undefined'},
+          headers: ${JSON.stringify(headers)},
+          method: '${method}'
+        })
+          .then(response => response.text())
+          .then(responseText => {
+            // Display the response in an HTML element
+            document.getElementById('response').textContent = responseText;
+
+            // Log the response to the console
+            console.log(responseText);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });`;
+
+        navigator.clipboard.writeText(fetchCommand)
+          .then(() => {
+            console.log('Fetch command copied to clipboard:', fetchCommand);
+            alert('Fetch command copied to clipboard!');
+          })
+          .catch(error => {
+            console.error('Error copying fetch command:', error);
+          });
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Fetch API Example</h1>
+    <p>Enter the Fetch API command details:</p>
+    <label for="url">URL:</label>
+    <input type="text" id="url" style="width: 300px;"><br>
+    <label for="body">Body:</label>
+    <textarea id="body" rows="5" style="width: 300px;"></textarea><br>
+    <label for="headers">Headers:</label>
+    <textarea id="headers" rows="5" style="width: 300px;"></textarea><br>
+    <label for="method">Method:</label>
+    <input type="text" id="method" style="width: 300px;"><br>
+    <button onclick="performFetch()">Fetch</button>
+    <button onclick="copyFetchCommand()">Copy Fetch</button>
+    <h2>Response:</h2>
+    <pre id="response"></pre>
+
+    <script>
+      function copyFetchCommand() {
+        const url = document.getElementById('url').value;
+        const body = document.getElementById('body').value;
+        const headers = JSON.parse(document.getElementById('headers').value);
+        const method = document.getElementById('method').value;
+
+        const fetchCommand = `fetch('${url}', {
+  body: ${body ? JSON.stringify(body) : 'undefined'},
+  headers: ${JSON.stringify(headers)},
+  method: '${method}'
+})
+  .then(response => response.text())
+  .then(responseText => {
+    // Display the response in an HTML element
+    document.getElementById('response').textContent = responseText;
+
+    // Log the response to the console
+    console.log(responseText);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });`;
+
+        navigator.clipboard.writeText(fetchCommand)
+          .then(() => {
+            console.log('Fetch command copied to clipboard:', fetchCommand);
+            alert('Fetch command copied to clipboard!');
+          })
+          .catch(error => {
+            console.error('Error copying fetch command:', error);
+          });
+      }
+    </script>
+  </body>
+</html>
+
